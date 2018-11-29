@@ -5,17 +5,43 @@
  */
 package com.mycompanycol.diseños;
 
+import com.mycompanycol.dto.DtoLogin;
+import java.awt.CardLayout;
+import java.awt.event.ActionEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 /**
  *
  * @author Daniel
  */
 public class login2 extends javax.swing.JPanel {
-
+    private JPanel panel1;
+    private CardLayout card1;
+    private DtoLogin login;
+    
+     private static final String DB_DRIVER = "org.postgresql.Driver";
+    private static final String DB_CONNECTION = "jdbc:postgresql://localhost:5432/factura";
+    private static final String DB_USER = "postgres";
+    private static final String DB_PASSWORD = "shoutmonx8";
+     
     /**
      * Creates new form login2
      */
-    public login2() {
+    public login2(JPanel panel1) {
+        
+        
         initComponents();
+        this.panel1= panel1;
+        this.card1 = (CardLayout) panel1.getLayout();
+        crear1();
     }
 
     /**
@@ -34,6 +60,8 @@ public class login2 extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         Pass = new javax.swing.JTextField();
         enviar = new javax.swing.JButton();
+        cambiar2 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -59,10 +87,9 @@ public class login2 extends javax.swing.JPanel {
         );
 
         jLabel4.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/login-01.png"))); // NOI18N
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/login-02.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/login-01.png"))); // NOI18N
 
         Pass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -81,6 +108,11 @@ public class login2 extends javax.swing.JPanel {
             }
         });
 
+        cambiar2.setText("volver");
+
+        jLabel5.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/login-02.png"))); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -90,21 +122,27 @@ public class login2 extends javax.swing.JPanel {
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(17, 17, 17))
             .addGroup(layout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Pass, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(52, 52, 52)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Pass, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(181, 181, 181)
-                        .addComponent(enviar)))
+                        .addComponent(enviar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(205, 205, 205)
+                        .addComponent(cambiar2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -112,17 +150,21 @@ public class login2 extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Usuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(46, 46, 46)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(Pass, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(61, 61, 61)
+                .addGap(47, 47, 47)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
+                    .addComponent(Usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel5)
+                    .addComponent(Pass, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addComponent(enviar)
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cambiar2)
+                .addContainerGap(39, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -138,10 +180,99 @@ public class login2 extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Pass;
     private javax.swing.JTextField Usuario;
+    private javax.swing.JButton cambiar2;
     private javax.swing.JButton enviar;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
+    private void crearComponentes() {
+        this.enviar.addActionListener((ActionEvent e) -> {
+            boolean save = true;
+            login=new DtoLogin();
+             login.usuario= Usuario.getText() ;
+             login.contraseña= Pass.getText() ;
+                    
+            if(login.usuario.isEmpty()){
+            
+                JOptionPane.showMessageDialog(this, "falta el usuario");
+            
+            }
+            else{
+                
+                 if(login.contraseña.isEmpty()){
+            
+                   JOptionPane.showMessageDialog(this, "falta la contraseña");
+            
+                }
+                 else{
+                       String sql="Select * FROM usuarios WHERE userid='"+login.usuario+"' AND password ='"+login.contraseña+"'";
+                        Connection conet = null;
+                        try{
+                         conet= getDBConnection();
+                         Statement st = conet.createStatement();
+                         ResultSet rs = st.executeQuery(sql);
+                         if(rs.next())
+                         {   JOptionPane.showMessageDialog(this, "entraste");
+                             Formulario form = new Formulario(new java.awt.Frame(),true);
+                             form.setVisible(true);
+                             
+                         }
+                         
+                        }catch(SQLException EX){
+                            JOptionPane.showMessageDialog(this, "error de login");
+                        }finally{
+                            
+                           try {
+                               conet.close();
+                           } catch (SQLException ex) {
+                               Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                           }
+                        }
+                 }
+            
+            }
+            
+            
+          
+     
+            });
+    }
+    private void crear1() {
+        this.cambiar2.addActionListener((ActionEvent e) -> {
+            this.card1.show(this.panel1, "registrarse");
+        });
+    }
+    
+    private static Connection getDBConnection() {
+
+        Connection dbConnection = null;
+
+        try {
+
+            Class.forName(DB_DRIVER);
+
+        } catch (ClassNotFoundException e) {
+
+            System.out.println(e.getMessage());
+
+        }
+
+        try {
+
+            dbConnection = DriverManager.getConnection(DB_CONNECTION, DB_USER,
+                    DB_PASSWORD);
+            return dbConnection;
+
+        } catch (SQLException e) {
+
+            System.out.println(e.getMessage());
+
+        }
+
+        return dbConnection;
+
+    }
 }

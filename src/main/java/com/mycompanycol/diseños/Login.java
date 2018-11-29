@@ -6,6 +6,7 @@
 package com.mycompanycol.diseños;
 
 import com.mycompanycol.dto.DtoLogin;
+import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -22,6 +23,7 @@ import javax.swing.JOptionPane;
  */
 public class Login extends javax.swing.JFrame {
   private DtoLogin login;
+  private CardLayout card;
   
    private static final String DB_DRIVER = "org.postgresql.Driver";
     private static final String DB_CONNECTION = "jdbc:postgresql://localhost:5432/factura";
@@ -33,7 +35,8 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
-        crearComponentes();
+        
+         crearComponentes2();
     }
 
     /**
@@ -47,13 +50,6 @@ public class Login extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        Usuario = new javax.swing.JTextField();
-        Pass = new javax.swing.JTextField();
-        enviar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -62,93 +58,7 @@ public class Login extends javax.swing.JFrame {
         jPanel1.setLayout(null);
 
         jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel2.setFont(new java.awt.Font("Prestige Elite Std", 1, 24)); // NOI18N
-        jLabel2.setText("Login");
-        jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(207, 207, 207)
-                .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel2)
-                .addContainerGap(21, Short.MAX_VALUE))
-        );
-
-        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/login-02.png"))); // NOI18N
-
-        jLabel4.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/login-01.png"))); // NOI18N
-
-        Pass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PassActionPerformed(evt);
-            }
-        });
-
-        enviar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/boton-01.png"))); // NOI18N
-        enviar.setBorder(null);
-        enviar.setBorderPainted(false);
-        enviar.setContentAreaFilled(false);
-        enviar.setOpaque(true);
-        enviar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                enviarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Pass, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(enviar))
-                .addGap(51, 51, 51))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Usuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(46, 46, 46)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(Pass, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(62, 62, 62)
-                .addComponent(enviar)
-                .addGap(71, 71, 71))
-        );
-
+        jPanel2.setLayout(new java.awt.CardLayout());
         jPanel1.add(jPanel2);
         jPanel2.setBounds(150, 60, 500, 480);
 
@@ -169,14 +79,6 @@ public class Login extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void PassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PassActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_PassActionPerformed
-
-    private void enviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_enviarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -214,99 +116,108 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField Pass;
-    private javax.swing.JTextField Usuario;
-    private javax.swing.JButton enviar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
 
-    private void crearComponentes() {
-        this.enviar.addActionListener((ActionEvent e) -> {
-            boolean save = true;
-            login=new DtoLogin();
-             login.usuario= Usuario.getText() ;
-             login.contraseña= Pass.getText() ;
-                    
-            if(login.usuario.isEmpty()){
-            
-                JOptionPane.showMessageDialog(this, "falta el usuario");
-            
-            }
-            else{
-                
-                 if(login.contraseña.isEmpty()){
-            
-                   JOptionPane.showMessageDialog(this, "falta la contraseña");
-            
-                }
-                 else{
-                       String sql="Select * FROM usuarios WHERE userid='"+login.usuario+"' AND password ='"+login.contraseña+"'";
-                        Connection conet = null;
-                        try{
-                         conet= getDBConnection();
-                         Statement st = conet.createStatement();
-                         ResultSet rs = st.executeQuery(sql);
-                         if(rs.next())
-                         {   JOptionPane.showMessageDialog(this, "entraste");
-                             Formulario form = new Formulario(new java.awt.Frame(),true);
-                             form.setVisible(true);
-                             
-                         }
-                         
-                        }catch(SQLException EX){
-                            JOptionPane.showMessageDialog(this, "error de login");
-                        }finally{
-                            
-                           try {
-                               conet.close();
-                           } catch (SQLException ex) {
-                               Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                           }
-                        }
-                 }
-            
-            }
-            
-            
-          
-     
-            });
+//    private void crearComponentes() {
+//        this.enviar.addActionListener((ActionEvent e) -> {
+//            boolean save = true;
+//            login=new DtoLogin();
+//             login.usuario= Usuario.getText() ;
+//             login.contraseña= Pass.getText() ;
+//                    
+//            if(login.usuario.isEmpty()){
+//            
+//                JOptionPane.showMessageDialog(this, "falta el usuario");
+//            
+//            }
+//            else{
+//                
+//                 if(login.contraseña.isEmpty()){
+//            
+//                   JOptionPane.showMessageDialog(this, "falta la contraseña");
+//            
+//                }
+//                 else{
+//                       String sql="Select * FROM usuarios WHERE userid='"+login.usuario+"' AND password ='"+login.contraseña+"'";
+//                        Connection conet = null;
+//                        try{
+//                         conet= getDBConnection();
+//                         Statement st = conet.createStatement();
+//                         ResultSet rs = st.executeQuery(sql);
+//                         if(rs.next())
+//                         {   JOptionPane.showMessageDialog(this, "entraste");
+//                             Formulario form = new Formulario(new java.awt.Frame(),true);
+//                             form.setVisible(true);
+//                             
+//                         }
+//                         
+//                        }catch(SQLException EX){
+//                            JOptionPane.showMessageDialog(this, "error de login");
+//                        }finally{
+//                            
+//                           try {
+//                               conet.close();
+//                           } catch (SQLException ex) {
+//                               Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+//                           }
+//                        }
+//                 }
+//            
+//            }
+//            
+//            
+//          
+//     
+//            });
+//    }
+//    
+    
+    private void crearComponentes2(){
+        
+         this.card=(CardLayout)jPanel2.getLayout();
+        registrarse res =  new registrarse (this.jPanel2);
+        login2 res2 = new login2(this.jPanel2);
+        
+        
+        
+        jPanel2.add(res,"registrarse");
+        jPanel2.add(res2,"login2");
+        
+        
+        card.show(jPanel2,"login2");
+        
     }
     
-    
-     private static Connection getDBConnection() {
-
-        Connection dbConnection = null;
-
-        try {
-
-            Class.forName(DB_DRIVER);
-
-        } catch (ClassNotFoundException e) {
-
-            System.out.println(e.getMessage());
-
-        }
-
-        try {
-
-            dbConnection = DriverManager.getConnection(DB_CONNECTION, DB_USER,
-                    DB_PASSWORD);
-            return dbConnection;
-
-        } catch (SQLException e) {
-
-            System.out.println(e.getMessage());
-
-        }
-
-        return dbConnection;
-
-    }
+//     private static Connection getDBConnection() {
+//
+//        Connection dbConnection = null;
+//
+//        try {
+//
+//            Class.forName(DB_DRIVER);
+//
+//        } catch (ClassNotFoundException e) {
+//
+//            System.out.println(e.getMessage());
+//
+//        }
+//
+//        try {
+//
+//            dbConnection = DriverManager.getConnection(DB_CONNECTION, DB_USER,
+//                    DB_PASSWORD);
+//            return dbConnection;
+//
+//        } catch (SQLException e) {
+//
+//            System.out.println(e.getMessage());
+//
+//        }
+//
+//        return dbConnection;
+//
+//    }
 }
