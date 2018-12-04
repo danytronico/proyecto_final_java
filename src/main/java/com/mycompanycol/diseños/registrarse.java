@@ -5,8 +5,19 @@
  */
 package com.mycompanycol.diseños;
 
+import com.mycompanycol.conexion.DB;
+import com.mycompanycol.dto.DtoRegistrarse;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -16,6 +27,11 @@ import javax.swing.JPanel;
 public class registrarse extends javax.swing.JPanel {
     private JPanel panel1;
     private CardLayout card1;
+    private DtoRegistrarse res;
+    private DB data;
+    
+    private Timestamp time;
+      private static AtomicInteger count = new AtomicInteger(0); 
     /**
      * Creates new form registrarse
      */
@@ -37,12 +53,12 @@ public class registrarse extends javax.swing.JPanel {
 
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        Vusuario = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        Vclave = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        enviar = new javax.swing.JButton();
+        Vactivo = new javax.swing.JCheckBox();
+        enviar2 = new javax.swing.JButton();
         cambiar1 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
 
@@ -69,29 +85,29 @@ public class registrarse extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTextField1.setText("jTextField1");
+        Vusuario.setText("jTextField1");
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/usuarios-01.png"))); // NOI18N
 
-        jTextField2.setText("jTextField1");
+        Vclave.setText("jTextField1");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Activo");
 
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        Vactivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                VactivoActionPerformed(evt);
             }
         });
 
-        enviar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/boton-01.png"))); // NOI18N
-        enviar.setBorder(null);
-        enviar.setBorderPainted(false);
-        enviar.setContentAreaFilled(false);
-        enviar.setOpaque(true);
-        enviar.addActionListener(new java.awt.event.ActionListener() {
+        enviar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/boton-01.png"))); // NOI18N
+        enviar2.setBorder(null);
+        enviar2.setBorderPainted(false);
+        enviar2.setContentAreaFilled(false);
+        enviar2.setOpaque(true);
+        enviar2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                enviarActionPerformed(evt);
+                enviar2ActionPerformed(evt);
             }
         });
 
@@ -123,11 +139,11 @@ public class registrarse extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jCheckBox1)))
+                                    .addComponent(Vclave, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Vactivo)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(49, 49, 49)
-                                .addComponent(enviar))))
+                                .addComponent(enviar2))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(202, 202, 202)
                         .addComponent(cambiar1))
@@ -135,7 +151,7 @@ public class registrarse extends javax.swing.JPanel {
                         .addContainerGap()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(Vusuario, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(44, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -146,11 +162,11 @@ public class registrarse extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(103, 103, 103)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Vusuario, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(64, 64, 64)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Vclave, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(56, 56, 56)
-                        .addComponent(enviar))
+                        .addComponent(enviar2))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(50, 50, 50)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -161,20 +177,27 @@ public class registrarse extends javax.swing.JPanel {
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(17, 17, 17)
-                                .addComponent(jCheckBox1)))))
+                                .addComponent(Vactivo)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cambiar1)
                 .addContainerGap(31, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+    private void VactivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VactivoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    }//GEN-LAST:event_VactivoActionPerformed
 
-    private void enviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_enviarActionPerformed
+    private void enviar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviar2ActionPerformed
+          try {
+            dtopro2();
+            
+            JOptionPane.showMessageDialog(this, "se guardo");
+        } catch (SQLException ex) {
+            Logger.getLogger(Factura.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "no se guardo");
+        }
+    }//GEN-LAST:event_enviar2ActionPerformed
 
     private void cambiar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambiar1ActionPerformed
         // TODO add your handling code here:
@@ -182,21 +205,89 @@ public class registrarse extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox Vactivo;
+    private javax.swing.JTextField Vclave;
+    private javax.swing.JTextField Vusuario;
     private javax.swing.JButton cambiar1;
-    private javax.swing.JButton enviar;
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JButton enviar2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 
     private void crear1() {
         this.cambiar1.addActionListener((ActionEvent e) -> {
             this.card1.show(this.panel1, "login2");
         });
+    }
+    
+    
+    
+    public void dtopro2()throws SQLException{
+        
+        res = new  DtoRegistrarse();
+                    
+                    res.usuario = Vusuario.getText();
+                    res.clave = Vclave.getText();
+                    res.activo= Vactivo.isSelected();
+            
+            Connection dbConnection = null;
+        PreparedStatement preparedStatementInsert = null;
+       
+        
+
+        String insertTableSQL = "INSERT INTO usuarios"
+                + "(userid,password,activo,fecha) VALUES"
+                + "(?,?,?,?)";
+          
+       
+
+        try {
+            
+           
+            
+            data = new DB();
+            
+            
+            dbConnection = data.getDBConnection();
+
+            dbConnection.setAutoCommit(false);
+
+            preparedStatementInsert = dbConnection.prepareStatement(insertTableSQL);
+            
+            preparedStatementInsert.setString(1,res.usuario );
+            preparedStatementInsert.setString(2,res.clave );
+            preparedStatementInsert.setBoolean(3,res.activo);
+            preparedStatementInsert.setTimestamp(4,time);
+            
+            preparedStatementInsert.executeUpdate();
+
+            
+
+            dbConnection.commit();
+
+            System.out.println("Done!");
+
+        } catch (SQLException e) {
+
+            System.out.println(e.getMessage());
+            dbConnection.rollback();
+
+        } finally {
+
+            if (preparedStatementInsert != null) {
+                preparedStatementInsert.close();
+            }
+
+            
+
+            if (dbConnection != null) {
+                dbConnection.close();
+            }
+
+        }
+        
     }
 }
